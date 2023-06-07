@@ -4,38 +4,38 @@ const ctx = canvas.getContext("2d");
 canvas.width = innerWidth;
 canvas.height = innerHeight - 4;
 
+requestAnimationFrame(animate);
+
 let player = {
-  x: canvas.width/2,
-  y: canvas.height/2,
-  w: 36,
-  h: 36,
+  x: canvas.width / 2,
+  y: canvas.height / 2,
+  w: 50,
+  h: 50,
   xSpeed: 0,
   ySpeed: 0,
   speed: 5,
 };
+
 let enemy = {
   x: Math.random() * canvas.width,
-  y: Math.random() *canvas.height,
+  y: Math.random() * canvas.height,
   w: 50,
   h: 50,
-xSpeed : 0,
-ySpeed : 0,
-speed : 2
-}
-requestAnimationFrame(animate);
+  xSpeed: 0,
+  ySpeed: 0,
+  speed: 4,
+};
 
 function animate() {
-
-let dx = player.x - enemy.x
-let dy = player.y - enemy.y
-let distance = Math.sqrt((dx * dx) +(dy * dy))
-
+  let dx = player.x - enemy.x;
+  let dy = player.y - enemy.y;
+  let distance = Math.sqrt(dx * dx + dy * dy);
 
   player.x += player.xSpeed;
   player.y += player.ySpeed;
 
-  enemy.xSpeed = (dx / distance) * enemy.speed
-  enemy.ySpeed = (dy / distance) * enemy.speed
+  enemy.xSpeed = (dx / distance) * enemy.speed;
+  enemy.ySpeed = (dy / distance) * enemy.speed;
 
   enemy.x += enemy.xSpeed;
   enemy.y += enemy.ySpeed;
@@ -44,35 +44,49 @@ let distance = Math.sqrt((dx * dx) +(dy * dy))
   ctx.fillStyle = "black";
   ctx.fillRect(player.x, player.y, player.w, player.h);
 
-  ctx.fillStyle = "red";
-  ctx.fillRect(canvas.width/2 , 100, 50, 50);
-  
-  function spawnEnemy(){
-
-    ctx.fillStyle = "red"
-    ctx.fillRect(enemy.x, enemy.y, enemy.w, enemy.h)
-    console.log("spawnEnemy")
+  function spawnEnemy() {
+    ctx.fillStyle = "red";
+    ctx.fillRect(enemy.x, enemy.y, enemy.w, enemy.h);
   }
 
+  spawnEnemy();
 
-spawnEnemy()
+  if (player.x + player.w > canvas.width) {
+    player.x = canvas.width - player.w - 1;
+  }
+  if (player.x < 0) {
+    player.x = 1;
+  }
 
+  //bottom barrier
+  if (player.y + player.h > canvas.height) {
+    player.y = canvas.height - player.h;
+  }
+  //top barrier
+  if (player.y < 0) {
+    player.y = 2;
+  }
 
-
+  // detect player dead
+  if (
+    player.x < enemy.x + enemy.w &&
+    player.x + player.w > enemy.x &&
+    player.y < enemy.y + enemy.h &&
+    player.y + player.h > enemy.y
+  ) {
+    cancelAnimationFrame(animate);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.fillText("you died", canvas.width / 2, canvas.height / 2);
+    player.speed = 0;
+  }
 
   requestAnimationFrame(animate);
-
-
-  
-
-
 }
-addEventListener("keydown", keydownHandler);
+addEventListener("keydown", keydownHandler2);
 
-function keydownHandler(event) {
-  
-  console.log(event.code);
-
+function keydownHandler2(event) {
   if (event.code == "KeyD") {
     player.xSpeed = player.speed;
     player.ySpeed = 0;
@@ -90,8 +104,6 @@ function keydownHandler(event) {
 addEventListener("keyup", keyupHandler);
 
 function keyupHandler(event) {
-  console.log(event.code);
-
   if (event.code == "KeyD") {
     player.xSpeed = 0;
   } else if (event.code == "KeyA") {
@@ -102,5 +114,3 @@ function keyupHandler(event) {
     player.ySpeed = 0;
   }
 }
-
-
