@@ -3,6 +3,7 @@ const ctx = canvas.getContext("2d");
 
 canvas.width = innerWidth;
 canvas.height = innerHeight - 4;
+let score = 0;
 
 requestAnimationFrame(animate);
 
@@ -23,9 +24,10 @@ let enemy = {
   h: 50,
   xSpeed: 0,
   ySpeed: 0,
-  speed: 4,
+  speed: 0,
 };
 
+console.log("a");
 function animate() {
   let dx = player.x - enemy.x;
   let dy = player.y - enemy.y;
@@ -80,12 +82,39 @@ function animate() {
     ctx.textAlign = "center";
     ctx.fillText("you died", canvas.width / 2, canvas.height / 2);
     player.speed = 0;
+    enemy.x = player.x;
+
+    addEventListener("keydown", restart);
+    function restart(event) {
+      if (event.code == "Space") {
+        player.x = canvas.width / 2;
+        player.y = canvas.height / 2;
+        score = 0;
+        player.speed = 5;
+        enemy.x = Math.random() * canvas.width;
+        enemy.y = Math.random() * canvas.height;
+        animate();
+      }
+    }
+  } else {
+    //scoreboard
+
+    ctx.textAlign = "center";
+    ctx.font = "30px Arial";
+    ctx.fillStyle = "black";
+    ctx.fillText(`Score : ${score} `, canvas.width / 2, 50);
   }
 
   requestAnimationFrame(animate);
 }
-addEventListener("keydown", keydownHandler2);
+// score tick up
+setInterval(Timer, 1000);
+function Timer() {
+  score += 1;
+}
 
+// Movement
+addEventListener("keydown", keydownHandler2);
 function keydownHandler2(event) {
   if (event.code == "KeyD") {
     player.xSpeed = player.speed;
@@ -102,7 +131,6 @@ function keydownHandler2(event) {
 }
 
 addEventListener("keyup", keyupHandler);
-
 function keyupHandler(event) {
   if (event.code == "KeyD") {
     player.xSpeed = 0;
