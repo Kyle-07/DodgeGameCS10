@@ -84,18 +84,18 @@ function animate() {
     player.speed = 0;
     enemy.x = player.x;
 
-    addEventListener("keydown", restart);
-    function restart(event) {
-      if (event.code == "Space") {
-        player.x = canvas.width / 2;
-        player.y = canvas.height / 2;
-        score = 0;
-        player.speed = 5;
-        enemy.x = Math.random() * canvas.width;
-        enemy.y = Math.random() * canvas.height;
-        animate();
-      }
-    }
+    // addEventListener("keydown", restart);
+    // function restart(event) {
+    //   if (event.code == "Space") {
+    //     player.x = canvas.width / 2;
+    //     player.y = canvas.height / 2;
+    //     score = 0;
+    //     player.speed = 5;
+    //     enemy.x = Math.random() * canvas.width;
+    //     enemy.y = Math.random() * canvas.height;
+    //     animate();
+    //   }
+    // }
   } else {
     //scoreboard
 
