@@ -1,10 +1,17 @@
+//KYLE FLODEN CS10 Game project thing
+
+//IMPORTANT - if enemies are too fast to test my code lower these 2 variables
+
+let enem1speed = 1
+let enem2speed = 0
+
 // constants
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 // canvas size
 canvas.width = innerWidth;
-canvas.height = innerHeight - 4;
+canvas.height = innerHeight - 10;
 
 // variables for laater
 let score = 0;
@@ -31,8 +38,8 @@ let player = {
 let enemy = {
   x: canvas.width - 200 ,
   y: canvas.height - 200 ,
-  w: 150,
-  h: 150,
+  w: 260,
+  h: 260,
   xSpeed: 0,
   ySpeed: 0,
   speed: 0,
@@ -47,14 +54,24 @@ let enemy2 = {
   speed: 0,
 };
 
-// define wall
-let wall = {
-  x: canvas.width / 2,
-  y: 200,
-  w: 50,
-  h: 50,
-};
 
+// IF YOU WANT TO ENABLE WALLS MAKE SURE TO UNCOMMENT THIS 
+
+// // define wall
+// let wall = {
+//   x: canvas.width / 2 + 10,
+//   y: 300,
+//   w: 5,
+//   h: 400,
+// };
+
+// delay enemies moving 
+let Interval  = setInterval(delay, 150)
+function delay(){
+  enemy.speed = enem1speed
+  enemy2.speed = enem2speed
+  clearInterval(Interval)
+}
 
 function animate() {
 
@@ -105,14 +122,14 @@ function animate() {
   ctx.fillStyle = "blue";
   ctx.fillRect(enemy2.x, enemy2.y, enemy2.w, enemy2.h);
 
-//draw wall
+// //draw wall
   ctx.fillStyle = "green";
   ctx.fillRect(wall.x, wall.y, wall.w, wall.h);
 
 //right barrier
   if (player.x + player.w > canvas.width) {
     player.x = canvas.width - player.w - 1;
-  }
+  } 
   // left barrier
   if (player.x < 0) {
     player.x = 1;
@@ -127,16 +144,84 @@ function animate() {
     player.y = 2;
   }
 
-// wall collision wip may not be finished in time
-  if (
-    player.x + player.w > wall.x &&   
-    player.x < wall.x + wall.w &&     
-    player.y + player.h > wall.y &&   
-    player.y < wall.y + wall.h       
-  ) {
-    player.x = wall.x - player.w;
-  }
+//WALL COLLISION IS A WIP, FEEL FREE TO UNCOMMENT BUT ITS PRETTY BUGGY
+// MAKE SURE TO UNCOMMENT WALL PARAMETERS AT LINE 60 TO TEST WALLS
+
+  // // player collision w wall
+  // if (
+  //   player.x + player.w > wall.x &&
+  //   player.x < wall.x + wall.w &&
+  //   player.y + player.h > wall.y &&
+  //   player.y < wall.y + wall.h
+  // ) {
+  //   let dxw = player.x - wall.x;
+  //   let dxy = player.y - wall.y;
+  
+  //   if (dxw > 0) {
+  //     player.x = wall.x + wall.w;
+  //   } else if (dxw < 0 ) {
+  //     player.x = wall.x - player.w;
+  //   }
+  
+  //   if (dxy > 0 && player.x > wall.x - player.w && player.x < wall.x + wall.w) {
+  //     player.y = wall.y + wall.h;
+  //   } else if (dxy < 0 && player.x > wall.x - player.w && player.x < wall.x + wall.w) {
+  //     player.y = wall.y - player.h;
+  //   }
+  // }
+
+  // // enemy 1 collision w wall
+  // if (
+  //   enemy.x + enemy.w > wall.x &&
+  //   enemy.x < wall.x + wall.w &&
+  //   enemy.y + enemy.h > wall.y &&
+  //   enemy.y < wall.y + wall.h
+  // ) {
+  //   let dxw = enemy.x - wall.x;
+  //   let dxy = enemy.y - wall.y;
  
+  //   if (dxw > 0 ) {
+  //     enemy.x = wall.x + wall.w;
+     
+  //   } else if (dxw < 0 ) {
+  //     enemy.x = wall.x - enemy.w;
+  //   }
+ 
+  //   if (dxy > 0 && enemy.x > wall.x - enemy.w && enemy.x < wall.x + wall.w) {
+  //     enemy.y = wall.y + wall.h  ;
+  //   } else if (dxy < 0 && enemy.x > wall.x - enemy.w && enemy.x < wall.x + wall.w) {
+  //     enemy.y = wall.y - enemy.h  ;
+  //   }
+  // }
+
+  // // enemy 2 collision w wall
+
+  // if (
+  //   enemy2.x + enemy2.w > wall.x &&
+  //   enemy2.x < wall.x + wall.w &&
+  //   enemy2.y + enemy.h > wall.y &&
+  //   enemy2.y < wall.y + wall.h
+  // ) {
+  //   let dxw = enemy2.x - wall.x;
+  //   let dxy = enemy2.y - wall.y;
+ 
+  //   if (dxw > 0) {
+  //     enemy2.x = wall.x + wall.w ;
+   
+  //   } else if (dxw < 0) {
+  //     enemy2.x = wall.x - enemy2.w ;
+  
+  //   }
+ 
+  //   if (dxy > 0 && enemy2.x > wall.x - enemy2.w && enemy2.x < wall.x + wall.w) {
+  //     enemy2.y = wall.y + wall.h  ;
+  //   } else if (dxy < 0 && enemy2.x > wall.x - enemy2.w && enemy2.x < wall.x + wall.w) {
+  //     enemy2.y = wall.y - enemy2.h  ;
+  //   }
+  // }
+
+
+
 
 
 
@@ -173,6 +258,8 @@ function animate() {
     player.ySpeed = 0;
     enemy.x = player.x;
     dead = true;
+    enemy.speed = 0
+    enemy2.speed = 0
   } else {
     //scoreboard if player alive
 
@@ -218,15 +305,23 @@ function keydownHandler2(event) {
       player.y = canvas.height / 2;
       score = 0;
       player.speed = 4;
-      enemy.x = Math.random() * canvas.width;
-      enemy.y = Math.random() * canvas.height;
-      enemy2.x = Math.random() * canvas.width;
-      enemy2.y = Math.random() * canvas.height;
+      enemy.x =  canvas.width - 200 ;
+      enemy.y =   canvas.height - 200;
+      enemy2.x = 50 ;
+      enemy2.y = 50;
       dead = false;
       myInterval = setInterval(Timer, 1000);
       function Timer() {
         score += 1;
       }
+      
+      let Interval  = setInterval(delay, 150)
+      function delay(){
+        enemy.speed = enem1speed
+        enemy2.speed = enem2speed
+        clearInterval(Interval)
+      }
+      
     }
   }
   keydown = event.code;
