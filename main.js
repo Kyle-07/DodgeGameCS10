@@ -55,15 +55,14 @@ let enemy2 = {
 };
 
 
-// IF YOU WANT TO ENABLE WALLS MAKE SURE TO UNCOMMENT THIS 
 
-// // define wall
-// let wall = {
-//   x: canvas.width / 2 + 10,
-//   y: 300,
-//   w: 5,
-//   h: 400,
-// };
+// define wall
+let wall = {
+  x: canvas.width / 2 + 10,
+  y: 300,
+  w: 5,
+  h: 400,
+};
 
 // delay enemies moving 
 let Interval  = setInterval(delay, 150)
@@ -144,81 +143,81 @@ function animate() {
     player.y = 2;
   }
 
-//WALL COLLISION IS A WIP, FEEL FREE TO UNCOMMENT BUT ITS PRETTY BUGGY
-// MAKE SURE TO UNCOMMENT WALL PARAMETERS AT LINE 60 TO TEST WALLS
+//WALL COLLISION IS PRETTY BUGGY
 
-  // // player collision w wall
-  // if (
-  //   player.x + player.w > wall.x &&
-  //   player.x < wall.x + wall.w &&
-  //   player.y + player.h > wall.y &&
-  //   player.y < wall.y + wall.h
-  // ) {
-  //   let dxw = player.x - wall.x;
-  //   let dxy = player.y - wall.y;
-  
-  //   if (dxw > 0) {
-  //     player.x = wall.x + wall.w;
-  //   } else if (dxw < 0 ) {
-  //     player.x = wall.x - player.w;
-  //   }
-  
-  //   if (dxy > 0 && player.x > wall.x - player.w && player.x < wall.x + wall.w) {
-  //     player.y = wall.y + wall.h;
-  //   } else if (dxy < 0 && player.x > wall.x - player.w && player.x < wall.x + wall.w) {
-  //     player.y = wall.y - player.h;
-  //   }
-  // }
 
-  // // enemy 1 collision w wall
-  // if (
-  //   enemy.x + enemy.w > wall.x &&
-  //   enemy.x < wall.x + wall.w &&
-  //   enemy.y + enemy.h > wall.y &&
-  //   enemy.y < wall.y + wall.h
-  // ) {
-  //   let dxw = enemy.x - wall.x;
-  //   let dxy = enemy.y - wall.y;
+  // player collision w wall
+  if (
+    player.x + player.w > wall.x &&
+    player.x < wall.x + wall.w &&
+    player.y + player.h > wall.y &&
+    player.y < wall.y + wall.h
+  ) {
+    let dxw = player.x - wall.x;
+    let dxy = player.y - wall.y;
+  
+    if (dxw > 0) {
+      player.x = wall.x + wall.w;
+    } else if (dxw < 0 ) {
+      player.x = wall.x - player.w;
+    }
+  
+    if (dxy > 0 && player.x > wall.x - player.w && player.x < wall.x + wall.w) {
+      player.y = wall.y + wall.h;
+    } else if (dxy < 0 && player.x > wall.x - player.w && player.x < wall.x + wall.w) {
+      player.y = wall.y - player.h;
+    }
+  }
+
+  // enemy 1 collision w wall
+  if (
+    enemy.x + enemy.w > wall.x &&
+    enemy.x < wall.x + wall.w &&
+    enemy.y + enemy.h > wall.y &&
+    enemy.y < wall.y + wall.h
+  ) {
+    let dxw = enemy.x - wall.x;
+    let dxy = enemy.y - wall.y;
  
-  //   if (dxw > 0 ) {
-  //     enemy.x = wall.x + wall.w;
+    if (dxw > 0 ) {
+      enemy.x = wall.x + wall.w;
      
-  //   } else if (dxw < 0 ) {
-  //     enemy.x = wall.x - enemy.w;
-  //   }
+    } else if (dxw < 0 ) {
+      enemy.x = wall.x - enemy.w;
+    }
  
-  //   if (dxy > 0 && enemy.x > wall.x - enemy.w && enemy.x < wall.x + wall.w) {
-  //     enemy.y = wall.y + wall.h  ;
-  //   } else if (dxy < 0 && enemy.x > wall.x - enemy.w && enemy.x < wall.x + wall.w) {
-  //     enemy.y = wall.y - enemy.h  ;
-  //   }
-  // }
+    if (dxy > 0 && enemy.x > wall.x - enemy.w && enemy.x < wall.x + wall.w) {
+      enemy.y = wall.y + wall.h  ;
+    } else if (dxy < 0 && enemy.x > wall.x - enemy.w && enemy.x < wall.x + wall.w) {
+      enemy.y = wall.y - enemy.h  ;
+    }
+  }
 
-  // // enemy 2 collision w wall
+  // enemy 2 collision w wall
 
-  // if (
-  //   enemy2.x + enemy2.w > wall.x &&
-  //   enemy2.x < wall.x + wall.w &&
-  //   enemy2.y + enemy.h > wall.y &&
-  //   enemy2.y < wall.y + wall.h
-  // ) {
-  //   let dxw = enemy2.x - wall.x;
-  //   let dxy = enemy2.y - wall.y;
+  if (
+    enemy2.x + enemy2.w > wall.x &&
+    enemy2.x < wall.x + wall.w &&
+    enemy2.y + enemy.h > wall.y &&
+    enemy2.y < wall.y + wall.h
+  ) {
+    let dxw = enemy2.x - wall.x;
+    let dxy = enemy2.y - wall.y;
  
-  //   if (dxw > 0) {
-  //     enemy2.x = wall.x + wall.w ;
+    if (dxw > 0) {
+      enemy2.x = wall.x + wall.w ;
    
-  //   } else if (dxw < 0) {
-  //     enemy2.x = wall.x - enemy2.w ;
+    } else if (dxw < 0) {
+      enemy2.x = wall.x - enemy2.w ;
   
-  //   }
+    }
  
-  //   if (dxy > 0 && enemy2.x > wall.x - enemy2.w && enemy2.x < wall.x + wall.w) {
-  //     enemy2.y = wall.y + wall.h  ;
-  //   } else if (dxy < 0 && enemy2.x > wall.x - enemy2.w && enemy2.x < wall.x + wall.w) {
-  //     enemy2.y = wall.y - enemy2.h  ;
-  //   }
-  // }
+    if (dxy > 0 && enemy2.x > wall.x - enemy2.w && enemy2.x < wall.x + wall.w) {
+      enemy2.y = wall.y + wall.h  ;
+    } else if (dxy < 0 && enemy2.x > wall.x - enemy2.w && enemy2.x < wall.x + wall.w) {
+      enemy2.y = wall.y - enemy2.h  ;
+    }
+  }
 
 
 
